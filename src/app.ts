@@ -7,7 +7,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 
-app.get("/loop:i", (req, res) => {
+app.get("/loop/:i", (req, res) => {
     const i = parseInt(req.params.i) // bekert ertek
     const tomb: string[] = [];
 
