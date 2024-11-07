@@ -24,7 +24,7 @@ export const getAllNews = async () => {
     return news;
 }
 
-export const creatNews = async (newsData: INewsData) => {
+export const createNews = async (newsData: INewsData) => {
     const inserted = await newsRepository.create(newsData)
     await newsRepository.save(inserted)
 
