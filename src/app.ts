@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import { AppDataSource } from "./data-source"
+import authorController  from "./routes/authors.controller"
 
 dotenv.config()
 
@@ -18,6 +19,8 @@ app.get("/loop/:i", (req, res) => {
     res.json(tomb)
     return
 })
+
+app.use("/authors", authorController)
 
 app.listen(process.env.PORT, () => {
     console.log(`server is running on port: ${process.env.PORT}`)
