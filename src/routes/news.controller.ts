@@ -1,6 +1,5 @@
 import express, {Request, Response} from "express"
-import { createNews, deleteNews, getAllNews, updateNews } from "../services/news.service";
-
+import { createNews, deleteNews, getAllNews, updateNews } from  "../services/news.service";
 
 const router = express.Router()
 
