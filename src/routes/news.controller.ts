@@ -1,6 +1,8 @@
 import express, {Request, Response} from "express"
 import { connectToAuthor, createNews, deleteNews, getAllNews, updateNews} from  "../services/news.service";
 import { connect } from "http2";
+import { validateData } from "../middleware/validationMiddleWare";
+import { newsCreateSchema, newsUpdateSchema } from "../schemas/newsSchemas";
 
 const router = express.Router()
 
@@ -12,7 +14,7 @@ router.get("/", async (req: Request, res: Response) => {
     return
 })
 
-router.post("/create", async (req: Request, res: Response) => {
+router.post("/create", validateData(newsCreateSchema), async (req: Request, res: Response) => {
     res.status(201).json(await createNews({
         title: req.body.title,
         lead: req.body.lead,
@@ -20,7 +22,7 @@ router.post("/create", async (req: Request, res: Response) => {
     }))
 })
 
-router.put("/update/:id", async (req: Request, res: Response) => {
+router.put("/update/:id", validateData(newsUpdateSchema), async (req: Request, res: Response) => {
     const update = await updateNews({
         id: parseInt(req.params.id),
         title: req.body.title,
@@ -39,7 +41,7 @@ router.delete("/delete/:id", async (req: Request, res: Response) => {
 })
 
 
-router.put("/connect", async (req: Request, res: Response) => {
+router.put("/connect", validateData(newsCreateSchema), async (req: Request, res: Response) => {
     const connected = await connectToAuthor(
         req.body.author_id,
         req.body.news

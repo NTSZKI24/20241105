@@ -11,3 +11,8 @@ export const newsUpdateSchema = z.object({
     lead: z.string(),
     author_id: z.optional(z.number())
 })
+
+export const newsConnectSchema = z.object({
+    author_id: z.number(),
+    news: z.number().array().nonempty()
+})

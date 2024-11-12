@@ -1,5 +1,7 @@
 import express, {Request, Response} from "express"
 import { creatAuthor, deleteAuthor, getAllAuthors, updateAuthor } from "../services/authors.service";
+import { validateData } from "../middleware/validationMiddleWare";
+import { authorsCreateSchema, authorsUpdateSchema } from "../schemas/authorsSchema";
 
 const router = express.Router()
 
@@ -11,14 +13,14 @@ router.get("/", async (req: Request, res: Response) => {
     return
 })
 
-router.post("/create", async (req: Request, res: Response) => {
+router.post("/create", validateData(authorsCreateSchema), async (req: Request, res: Response) => {
     res.status(201).json(await creatAuthor({
         first_name: req.body.first_name,
         last_name: req.body.last_name
     }))
 })
 
-router.put("/update/:id", async (req: Request, res: Response) => {
+router.put("/update/:id", validateData(authorsUpdateSchema) ,async (req: Request, res: Response) => {
     const update = await updateAuthor({
         id: parseInt(req.params.id),
         first_name: req.body.first_name,
